@@ -27,9 +27,11 @@ const ChatCard = ({ contact }) => {
           height="55"
           className="rounded-circle"
         ></img>
-        <div className="ms-3">
+        <div className="ms-3 d-flex flex-column justify-content-start align-items-start">
           <p className="fw-bold mb-1">{contact.name}</p>
-          <p className="text-muted mb-0">{contact.lastMessage}</p>
+          <p className="text-muted mb-0">
+            {contact?.chats?.[contact?.chats?.length - 1]?.text}
+          </p>
         </div>
       </div>
     </>
