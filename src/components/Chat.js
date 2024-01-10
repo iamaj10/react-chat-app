@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 
 import { CiCirclePlus } from "react-icons/ci";
+import { BsFillSendArrowUpFill } from "react-icons/bs";
 
 const Chat = () => {
   const dispatch = useDispatch();
@@ -110,6 +111,9 @@ const Chat = () => {
                   >
                     {" "}
                     Send
+                    <span className="ms-2">
+                      <BsFillSendArrowUpFill />
+                    </span>
                   </Button>
                 </Col>
               </Row>
