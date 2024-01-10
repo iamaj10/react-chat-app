@@ -25,6 +25,7 @@ const Chat = () => {
   // console.log(currentContact?.chats);
 
   const hanldeSend = () => {
+    if(!message) return;
     let chat = {
       text: message,
       sent: true,
