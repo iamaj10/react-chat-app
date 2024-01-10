@@ -57,8 +57,10 @@ export const sentMessage = createAsyncThunk(
         new: false,
         updated: Date.now(),
       });
+      toast.success("Message Sent");
     } catch (e) {
-      console.log(e);
+      // console.log(e);
+      toast.error("Failed to Send Message. Try Again");
     }
   }
 );
