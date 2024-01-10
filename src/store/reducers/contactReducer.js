@@ -21,6 +21,7 @@ const INITIAL_STATE = {
   contacts: [],
 };
 
+//MAKING ACTION CREATORS
 export const fetchContacts = createAsyncThunk(
   "contacts/fetch",
   async (_, thunkAPI) => {
@@ -41,6 +42,7 @@ export const fetchContacts = createAsyncThunk(
   }
 );
 
+//MAKING ACTION CREATORS
 export const sentMessage = createAsyncThunk(
   "contacts/sent",
   async ({ chat, contactID }, thunkAPI) => {
@@ -86,9 +88,9 @@ const contactsSlice = createSlice({
         state.contacts[existingChatIndex] = newContact;
       }
     },
-    sentChat: (state, action) => {
-      state.contacts.push(action.payload);
-    },
+    // sentChat: (state, action) => {
+    //   state.contacts.push(action.payload);
+    // },
   },
 });
 //export reducer
