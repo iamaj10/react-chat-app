@@ -11,7 +11,13 @@ import { toast } from "react-toastify";
 import { db } from "../../firebaseinit";
 
 //GETTING COMPONENTS FROM FIREBASE/FIRESTORE
-import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  getDoc,
+  updateDoc,
+  doc,
+  onSnapshot,
+} from "firebase/firestore";
 
 //MAKING INITIAL STATE
 const INITIAL_STATE = {
@@ -54,15 +60,55 @@ const INITIAL_STATE = {
 //   }
 // );
 
+// export const fetchContacts = createAsyncThunk(
+//   "chats/fetch",
+//   async ({ contactID }, thunkAPI) => {
+//     try {
+//       const querySnapshot = await getDocs(collection(db, "contacts"));
+//       querySnapshot.forEach((doc) => {
+//         // doc.data() is never undefined for query doc snapshots
+//         // console.log(doc.id, " => ", doc.data());
+//         thunkAPI.dispatch(getChat(doc.data()));
+//       });
+//     } catch (e) {
+//       console.log(e);
+//     }
+//   }
+// );
+
 export const fetchContacts = createAsyncThunk(
-  "chats/fetch",
-  async ({ contactID }, thunkAPI) => {
+  "contacts/fetch",
+  async (_, thunkAPI) => {
     try {
-      const querySnapshot = await getDocs(collection(db, "contacts"));
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        // console.log(doc.id, " => ", doc.data());
-        thunkAPI.dispatch(getChat(doc.data()));
+      const contactsCollection = collection(db, "contacts");
+
+      // Set up the snapshot listener
+      const unsubscribe = onSnapshot(contactsCollection, (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          thunkAPI.dispatch(getChat(doc.data()));
+        });
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const sentMessage = createAsyncThunk(
+  "contacts/sent",
+  async ({ chat, contactID }, thunkAPI) => {
+    try {
+      const contactDocRef = doc(db, "contacts", contactID);
+
+      // Fetch the existing chats
+      const contactDocSnapshot = await getDoc(contactDocRef);
+      const existingChats = contactDocSnapshot.data().chats || [];
+
+      // Update the document with the new chat
+      await updateDoc(contactDocRef, {
+        chats: [...existingChats, chat],
+        new: false,
+        updated: Date.now(),
       });
     } catch (e) {
       console.log(e);

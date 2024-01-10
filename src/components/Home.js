@@ -1,5 +1,6 @@
 import { Col, Row } from "react-bootstrap";
 import ChatList from "./ChatList";
+import { BsChatLeftTextFill } from "react-icons/bs";
 
 const Home = () => {
   console.log("Home");
@@ -15,7 +16,19 @@ const Home = () => {
         </Col>
         <Col xs={9}>
           {" "}
-          <h1>Home</h1>
+          <div
+            className="d-flex justify-content-center align-items-center border-bottom"
+            style={{ height: "95vh" }}
+          >
+            <div className="d-flex flex-column">
+              {" "}
+              <span className="mx-2">
+                <BsChatLeftTextFill size={30} />
+              </span>
+              <span>Welcome to Chat Now!</span>
+              <span className="text-muted">Select a contact to start chatting</span>
+            </div>
+          </div>
         </Col>
       </Row>
 
